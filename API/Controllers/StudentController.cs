@@ -15,12 +15,8 @@ namespace API.Controllers
         {
             return new List<STEDENT_DTO>();
         }
-
-        // GET: api/Student/5
-        public STEDENT_DTO Get(STEDENT_DTO id)
-        {
-            return new STEDENT_DTO();
-        }
+        // add swagger
+        
 
         // POST: api/Student
         public void Post([FromBody]STEDENT_DTO value)

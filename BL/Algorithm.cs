@@ -110,7 +110,7 @@ namespace BL
                         }
 
                     }
-                    if (s.originn == 1 && origin1 > 0)
+                    if (s.origin == 1 && origin1 > 0)
                     {
                         origin1--;
                     }

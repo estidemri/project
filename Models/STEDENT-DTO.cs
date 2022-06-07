@@ -14,9 +14,8 @@ namespace Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string profession { get; set; }
-        
-        public Nullable<int> classCode { get; set; }
-        public Nullable<bool> statous { get; set; }
+        public string origin { get; set; }
+        public string mentally { get; set; }
         public Nullable<int> PersonalFilecCode { get; set; }
         public STEDENT_DTO CONVERTtOdto(STEDENTS S)
         {
@@ -26,8 +25,10 @@ namespace Models
                 id = S.id,
                 firstName = S.firstName,
                 lastName = S.lastName,
-                profession = S.profession
-
+                profession = S.profession,
+                origin = S.origin,
+                mentally = S.mentally,
+                PersonalFilecCode = S.PersonalFilecCode,
             };
         }
         public STEDENTS CONVERTFROMDTO(STEDENT_DTO S)
@@ -39,6 +40,8 @@ namespace Models
                 firstName = S.firstName,
                 lastName = S.lastName,
                 profession = S.profession,
+                origin = S.origin,
+                mentally = S.mentally,
                 PersonalFilecCode = S.PersonalFilecCode,
 
             };
