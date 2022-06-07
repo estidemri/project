@@ -13,6 +13,8 @@ namespace Models
         public string id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
+        public string profession { get; set; }
+        
         public Nullable<int> classCode { get; set; }
         public Nullable<bool> statous { get; set; }
         public Nullable<int> PersonalFilecCode { get; set; }
@@ -24,9 +26,7 @@ namespace Models
                 id = S.id,
                 firstName = S.firstName,
                 lastName = S.lastName,
-                classCode = S.class,
-                statous = S.statous,
-                PersonalFilecCode = S.PersonalFilecCode,
+                profession = S.profession
 
             };
         }
@@ -38,8 +38,7 @@ namespace Models
                 id = S.id,
                 firstName = S.firstName,
                 lastName = S.lastName,
-                classCode = S.classCode,
-                statous = S.statous,
+                profession = S.profession,
                 PersonalFilecCode = S.PersonalFilecCode,
 
             };
