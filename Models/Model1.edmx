@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="estiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ROOMS">
+          <Key>
+            <PropertyRef Name="r_code" />
+          </Key>
+          <Property Name="r_code" Type="int" Nullable="false" />
+          <Property Name="number_of_beds" Type="int" />
+        </EntityType>
+        <EntityType Name="STEDENTS">
+          <Key>
+            <PropertyRef Name="st_code" />
+          </Key>
+          <Property Name="st_code" Type="int" Nullable="false" />
+          <Property Name="id" Type="varchar" MaxLength="9" />
+          <Property Name="firstName" Type="nchar" MaxLength="30" />
+          <Property Name="lastName" Type="nchar" MaxLength="30" />
+          <Property Name="PersonalFilecCode" Type="int" />
+          <Property Name="profession" Type="nchar" MaxLength="30" />
+          <Property Name="origin" Type="nchar" MaxLength="10" />
+          <Property Name="mentally" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityContainer Name="estiModelStoreContainer">
+          <EntitySet Name="ROOMS" EntityType="Self.ROOMS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="estiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ROOMS">
+          <Key>
+            <PropertyRef Name="r_code" />
+          </Key>
+          <Property Name="r_code" Type="Int32" Nullable="false" />
+          <Property Name="number_of_beds" Type="Int32" />
+        </EntityType>
+        <EntityType Name="STEDENTS">
+          <Key>
+            <PropertyRef Name="st_code" />
+          </Key>
+          <Property Name="st_code" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="PersonalFilecCode" Type="Int32" />
+          <Property Name="profession" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="origin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="mentally" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="estiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ROOMS" EntityType="Self.ROOMS" />
+          <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="estiModelStoreContainer" CdmEntityContainer="estiEntities">
+          <EntitySetMapping Name="ROOMS">
+            <EntityTypeMapping TypeName="estiModel.ROOMS">
+              <MappingFragment StoreEntitySet="ROOMS">
+                <ScalarProperty Name="r_code" ColumnName="r_code" />
+                <ScalarProperty Name="number_of_beds" ColumnName="number_of_beds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STEDENTS">
+            <EntityTypeMapping TypeName="estiModel.STEDENTS">
+              <MappingFragment StoreEntitySet="STEDENTS">
+                <ScalarProperty Name="st_code" ColumnName="st_code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="PersonalFilecCode" ColumnName="PersonalFilecCode" />
+                <ScalarProperty Name="profession" ColumnName="profession" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="mentally" ColumnName="mentally" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
