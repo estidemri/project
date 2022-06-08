@@ -7,6 +7,7 @@
       <Diagram DiagramId="5cf5d1c8fea141b9b57b99eec45c6391" Name="Diagram1">
         <EntityTypeShape EntityType="estiModel.ROOMS" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="estiModel.STEDENTS" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="estiModel.FK__STEDENTS__codRoo__6FE99F9F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -11,11 +11,11 @@ namespace BL
 {
     class Algorithm
     {
-        public void DoWork(int maxNumOfBedsInRoom)
+        public int[,] MakeMat(int maxNumOfBedsInRoom, List<STEDENT_DTO> students)
         {
-            
+
             Bl1 bl = new Bl1();
-            List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
+            //List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
             STEDENT_DTO s = new STEDENT_DTO();
             //משתנים שיכילו את כמות הבנות שאמורות להיות בחדר מכל אילוץ
             int class1 = 0, class2 = 0, class3 = 0, class4 = 0, profession1 = 0, profession2 = 0, profession3 = 0, origin1 = 0, origin2 = 0, origin3 = 0, mentally1 = 0, mentally2 = 0, mentally3 = 0;
@@ -50,7 +50,7 @@ namespace BL
                 origin1 = rooms[i].Arr[2].L[0];
 
 
-             origin1 = rooms[i].Arr[2].L[1];
+                origin1 = rooms[i].Arr[2].L[1];
 
                 origin1 = rooms[i].Arr[2].L[2];
 
@@ -123,7 +123,7 @@ namespace BL
                             else
                             {
 
-                                tziun += 5;
+                                tziun += 4;
 
                             }
 
@@ -143,7 +143,7 @@ namespace BL
                             else
                             {
 
-                                tziun += 5;
+                                tziun += 4;
                             }
 
                         }
@@ -153,8 +153,28 @@ namespace BL
                     mat1[i, j] = tziun;
                 }
             }
+            return mat1;
+        }
+        // פונקציה היוצרת 4 סוגי שיבוצים רנדומליים, בכל פעם לפי סדר שונה, ואת המטריצות שנוצרות שולחת לאלגוריתם ההונגרי
+
+        public void SendToHungarianAlgorithm(int maxBedsInRoom)
+        {
+            Bl1 bl = new Bl1();
+            List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
+            //List<STEDENT_DTO> students1 = bl.GetDbSet<STEDENT_DTO>();
+            //List<STEDENT_DTO> students2 = bl.GetDbSet<STEDENT_DTO>();
+            int[,] mat1 =MakeMat(maxBedsInRoom,students);
+            students.Reverse();
+            int[,] mat2 = MakeMat(maxBedsInRoom, students);
+            //int index = (students.Count) / 2;
+            //students1.RemoveRange(index, students.Count - index);
+            //students2.RemoveRange(0, index);
+            //List<STEDENT_DTO> students3 = students1 + students2;
+            int[,] mat3 = MakeMat(maxBedsInRoom,); 
+            int[,] mat4 = MakeMat(maxBedsInRoom,); 
         }
     }
+}
 
 
 

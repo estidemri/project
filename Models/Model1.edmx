@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="estiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="estiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ROOMS">
           <Key>
             <PropertyRef Name="r_code" />
@@ -12,11 +12,11 @@
           <Property Name="r_code" Type="int" Nullable="false" />
           <Property Name="number_of_beds" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\IMOE001\ESTI.MDF.dbo.STEDENTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="STEDENTS">
-          <Key>
-            <PropertyRef Name="st_code" />
-          </Key>
-          <Property Name="st_code" Type="int" Nullable="false" />
+          
+          <Property Name="st_code" Type="int" />
           <Property Name="id" Type="varchar" MaxLength="9" />
           <Property Name="firstName" Type="nchar" MaxLength="30" />
           <Property Name="lastName" Type="nchar" MaxLength="30" />
@@ -24,13 +24,43 @@
           <Property Name="profession" Type="nchar" MaxLength="30" />
           <Property Name="origin" Type="nchar" MaxLength="10" />
           <Property Name="mentally" Type="nchar" MaxLength="10" />
+          <Property Name="classCode" Type="int" />
+          <Property Name="codRoom" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__STEDENTS__codRoo__282DF8C2">
+          <End Role="ROOMS" Type="Self.ROOMS" Multiplicity="1" />
+          <End Role="STEDENTS" Type="Self.STEDENTS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ROOMS">
+              <PropertyRef Name="r_code" />
+            </Principal>
+            <Dependent Role="STEDENTS">
+              <PropertyRef Name="codRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="estiModelStoreContainer">
           <EntitySet Name="ROOMS" EntityType="Self.ROOMS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [STEDENTS].[st_code] AS [st_code], 
+    [STEDENTS].[id] AS [id], 
+    [STEDENTS].[firstName] AS [firstName], 
+    [STEDENTS].[lastName] AS [lastName], 
+    [STEDENTS].[PersonalFilecCode] AS [PersonalFilecCode], 
+    [STEDENTS].[profession] AS [profession], 
+    [STEDENTS].[origin] AS [origin], 
+    [STEDENTS].[mentally] AS [mentally], 
+    [STEDENTS].[classCode] AS [classCode], 
+    [STEDENTS].[codRoom] AS [codRoom]
+    FROM [dbo].[STEDENTS] AS [STEDENTS]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__STEDENTS__codRoo__282DF8C2" Association="Self.FK__STEDENTS__codRoo__282DF8C2">
+            <End Role="ROOMS" EntitySet="ROOMS" />
+            <End Role="STEDENTS" EntitySet="STEDENTS" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="estiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -40,12 +70,9 @@
           </Key>
           <Property Name="r_code" Type="Int32" Nullable="false" />
           <Property Name="number_of_beds" Type="Int32" />
+          <NavigationProperty Name="STEDENTS" Relationship="estiModel.FK__STEDENTS__codRoo__6FE99F9F" FromRole="ROOMS" ToRole="STEDENTS" />
         </EntityType>
         <EntityType Name="STEDENTS">
-          <Key>
-            <PropertyRef Name="st_code" />
-          </Key>
-          <Property Name="st_code" Type="Int32" Nullable="false" />
           <Property Name="id" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="firstName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="lastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
@@ -53,11 +80,31 @@
           <Property Name="profession" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="origin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="mentally" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="classCode" Type="Int32" />
+          <Property Name="codRoom" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ROOMS" Relationship="estiModel.FK__STEDENTS__codRoo__6FE99F9F" FromRole="STEDENTS" ToRole="ROOMS" />
+          <Property Name="st_code" Type="String" Nullable="false" />
         </EntityType>
         <EntityContainer Name="estiEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ROOMS" EntityType="Self.ROOMS" />
           <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" />
+          <AssociationSet Name="FK__STEDENTS__codRoo__6FE99F9F" Association="estiModel.FK__STEDENTS__codRoo__6FE99F9F">
+            <End Role="ROOMS" EntitySet="ROOMS" />
+            <End Role="STEDENTS" EntitySet="STEDENTS" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__STEDENTS__codRoo__6FE99F9F">
+          <End Type="estiModel.ROOMS" Role="ROOMS" Multiplicity="0..1" />
+          <End Type="estiModel.STEDENTS" Role="STEDENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROOMS">
+              <PropertyRef Name="r_code" />
+            </Principal>
+            <Dependent Role="STEDENTS">
+              <PropertyRef Name="codRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -75,7 +122,8 @@
           <EntitySetMapping Name="STEDENTS">
             <EntityTypeMapping TypeName="estiModel.STEDENTS">
               <MappingFragment StoreEntitySet="STEDENTS">
-                <ScalarProperty Name="st_code" ColumnName="st_code" />
+                <ScalarProperty Name="codRoom" ColumnName="codRoom" />
+                <ScalarProperty Name="classCode" ColumnName="classCode" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
