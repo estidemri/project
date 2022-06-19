@@ -195,13 +195,10 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DBConection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\HungarianAlgorithm.cs" />
     <Compile Include="RoutePrefixAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\API\API.csproj">
-      <Project>{03eb142c-a226-41b5-b529-40eab9f16f2b}</Project>
-      <Name>API</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{EF493A99-1426-4ED4-930A-08186D9AD4AD}</Project>
       <Name>Models</Name>

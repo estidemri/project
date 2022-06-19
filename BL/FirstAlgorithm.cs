@@ -53,22 +53,27 @@ namespace BL
             }
         }
         //האלגריתם לאיפיון החדר 
-        public Room[] RoomsAlgorithm(int maxNumOfBedsInRoom, List<STEDENT_DTO> listOfStudents)
+        public Room[] RoomsAlgorithm(int maxNumOfBedsInRoom)
         {
+            Bl1 bl = new Bl1();
+            List<STEDENT_DTO> listOfStudents = bl.GetDbSet<STEDENT_DTO>();
             int numOfStudents = listOfStudents.Count;
             //מס החדרים, לפי מס הבנות לחלק למס המיטות המקסימלי בכל חדר, ואם יש שארית, יתווספ עוד חדר שאפשר לשבץ בו
             int numOfRooms = (numOfStudents % maxNumOfBedsInRoom == 0) ? numOfStudents / maxNumOfBedsInRoom : numOfStudents / maxNumOfBedsInRoom + 1;
+            //מערך של החדרים לשיבוץ בגודל של מס' החדרים שבהם נשבץ  
             Room[] rooms = new Room[numOfRooms];
             //מס' מיטות בכל חדר
             for (int i = 0; i < rooms.Length; i++)
             {
                 rooms[i].Beds = maxNumOfBedsInRoom;
+                //זימון פונקציה שמאפסת את מערך האילוצים
                 rooms[i].RestartArrIlutzim();
             }
 
 
             //אילוץ שכבת גיל
             //מס' בנות שאמורות להיות בכל חדר מכל שכבת גיל
+            //מספר הבנות מכל כיתה
             int num1 = listOfStudents.Where(s => s.classCode == 1).Count();
             int num2 = listOfStudents.Where(s => s.classCode == 2).Count();
             int num3 = listOfStudents.Where(s => s.classCode == 3).Count();
