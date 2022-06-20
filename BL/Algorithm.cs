@@ -45,18 +45,19 @@ namespace BL
                      ilutzimMat[i,j] = rooms[i].Arr[3].L[2];
                 }
             }
-            int[,] mat1 = new int[students.Count + 1, rooms.Length + 1];
-            for (int i = 0; i < mat1.GetLength(0); i++)
-            {
-                mat1[i, 0] = students[i].st_code;
-            }
-            //לשנות שיהיה בלי כותרת
+            int[,] mat1 = new int[students.Count, rooms.Length ];
+
+            //for (int i = 0; i < mat1.GetLength(0); i++)
+            //{
+            //    mat1[i, 0] = students[i].st_code;
+            //}
+
             for (int i = 0; i < mat1.GetLength(0); i++)
             {
                 tziun = 0;
                 for (int j = 0; j < mat1.GetLength(1); j++)
                 {
-                    s = students.Where(st => st.st_code == mat1[i, 0]).First();
+                    s = students[i];
                     if (s.classCode == 1 && ilutzimMat[j,0] > 0)
                     {
                         ilutzimMat[j, 0]--;
@@ -154,19 +155,26 @@ namespace BL
         public void SendToHungarianAlgorithm(int maxBedsInRoom)
         {
             Bl1 bl = new Bl1();
+            //אפשר לקצר את הבאת התלמידים ע"י שווה לרשימה
+            //יצירת 4 רשימות שבכל אחת ייכנסו התלמידות לפי הסדר שמופיעות במטריצה של כל אחד מהשיבוצים
             List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
             List<STEDENT_DTO> students1 = bl.GetDbSet<STEDENT_DTO>();
             List<STEDENT_DTO> students2 = bl.GetDbSet<STEDENT_DTO>();
+            List<STEDENT_DTO> students3 = bl.GetDbSet<STEDENT_DTO>();
+            List<STEDENT_DTO> students4 = new List<STEDENT_DTO>();
+            List<STEDENT_DTO> students5 = bl.GetDbSet<STEDENT_DTO>();
             int[,] mat1 =MakeMat(maxBedsInRoom,students);
             students1.Reverse();
             int[,] mat2 = MakeMat(maxBedsInRoom, students1);
             int stdCount = students1.Count;
-            students2.RemoveRange(stdCount / 2, stdCount - stdCount / 2);
-            students1.RemoveRange(stdCount / 2, stdCount - stdCount / 2);
-            students1.InsertRange(0, students2);
-            int[,] mat3 = MakeMat(maxBedsInRoom,students1);
-            students1.Reverse();
-            int[,] mat4 = MakeMat(maxBedsInRoom,students1);
+            students5.RemoveRange(0, stdCount / 2);
+            students3.RemoveRange(stdCount / 2, stdCount - stdCount / 2);
+            students3.InsertRange(0, students5);
+            int[,] mat3 = MakeMat(maxBedsInRoom,students3);
+            students3.ForEach(s => students4.Add(s));
+            students4.Reverse();
+            int[,] mat4 = MakeMat(maxBedsInRoom,students4);
+
 
             //איך בודקים מהו השיבוץ הטוב ביותר מבין השיבוצים ???????
             int[] arr1 = HungarianAlgorithm.FindAssignments(mat1);

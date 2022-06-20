@@ -99,6 +99,7 @@ namespace BL
                         }
                         rooms[i].Beds -= rooms[i].Arr[0].L[0];
                     }
+                    else continue;
                 }
             }
             if (num2 > 0)
@@ -108,7 +109,7 @@ namespace BL
                     int beds = rooms[i].Beds;
                     if (num2 > 0 && beds > 0)
                     {
-                        if (num1 < beds)
+                        if (num2 < beds)
                         {
                             rooms[i].Arr[0].L[1] += num2;
                             num2 = 0;
@@ -120,6 +121,7 @@ namespace BL
                         }
                         rooms[i].Beds -= rooms[i].Arr[0].L[1];
                     }
+                    else continue;
                 }
             }
             if (num3 > 0)
@@ -127,17 +129,21 @@ namespace BL
                 for (int i = 0; i < numOfRooms; i++)
                 {
                     int beds = rooms[i].Beds;
-                    if (num3 < beds && beds > 0)
+                    if (num3 > 0 && beds > 0)
                     {
-                        rooms[i].Arr[0].L[2] += num3;
-                        num3 = 0;
+                        if (num3 < beds && beds > 0)
+                        {
+                            rooms[i].Arr[0].L[2] += num3;
+                            num3 = 0;
+                        }
+                        else
+                        {
+                            rooms[i].Arr[0].L[2] += beds;
+                            num3 -= beds;
+                        }
+                        rooms[i].Beds -= rooms[i].Arr[0].L[2];
                     }
-                    else
-                    {
-                        rooms[i].Arr[0].L[2] += beds;
-                        num3 -= beds;
-                    }
-                    rooms[i].Beds -= rooms[i].Arr[0].L[2];
+                    else continue;
                 }
             }
             if (num4 > 0)
@@ -145,26 +151,30 @@ namespace BL
                 for (int i = 0; i < numOfRooms; i++)
                 {
                     int beds = rooms[i].Beds;
-                    if (num4 < beds)
+                    if (num2 > 0 && beds > 0)
                     {
-                        rooms[i].Arr[0].L[3] += num4;
-                        num2 = 0;
+                        if (num4 < beds)
+                        {
+                            rooms[i].Arr[0].L[3] += num4;
+                            num2 = 0;
+                        }
+                        else
+                        {
+                            rooms[i].Arr[0].L[3] += beds;
+                            num4 -= beds;
+                        }
+                        rooms[i].Beds -= rooms[i].Arr[0].L[3];
                     }
-                    else
-                    {
-                        rooms[i].Arr[0].L[3] += beds;
-                        num4 -= beds;
-                    }
-                    rooms[i].Beds -= rooms[i].Arr[0].L[3];
+                    else continue;
                 }
             }
             // כמה בנות מכל מגמה אמורות להכנס לכל חדר
             //מגמת הנדסת תוכנה
-            int profession1 = listOfStudents.Where(s => s.professionCode == 1).Count();
+            int profession1 = listOfStudents.Where(s => s.profession == 1).Count();
             //מגמת חשבונאות
-            int profession2 = listOfStudents.Where(s => s.professionCode == 2).Count();
+            int profession2 = listOfStudents.Where(s => s.profession== 2).Count();
             //מגמת משאבי אנוש
-            int profession3 = listOfStudents.Where(s => s.professionCode == 3).Count();
+            int profession3 = listOfStudents.Where(s => s.profession == 3).Count();
 
             //כמות הבנות הממוצעת מהנדסת תוכנה שצריכה להיות בכל חדר
             int profession1InRoom = profession1 / numOfRooms;
@@ -183,11 +193,11 @@ namespace BL
 
             // כמה בנות מכל מנטליות אמורות להכנס לכל חדר
             //חוזרות בתשובה
-            int mentally1 = listOfStudents.Where(s => s.mentallyCode == 1).Count();
+            int mentally1 = listOfStudents.Where(s => s.mentally == 1).Count();
             //מתחזקות
-            int mentally2 = listOfStudents.Where(s => s.mentallyCode == 2).Count();
+            int mentally2 = listOfStudents.Where(s => s.mentally == 2).Count();
             //חרדיות מבית
-            int mentally3 = listOfStudents.Where(s => s.mentallyCode == 3).Count();
+            int mentally3 = listOfStudents.Where(s => s.mentally == 3).Count();
 
             //כמות הבנות הממוצעת חוזרות בתשובה שצריכה להיות בכל חדר
             int mentally1InRoom = mentally1 / numOfRooms;
@@ -207,11 +217,11 @@ namespace BL
 
             // כמה בנות מכל מוצא אמורות להכנס לכל חדר
             //מישראל
-            int origin1 = listOfStudents.Where(s => s.originCode == 1).Count();
+            int origin1 = listOfStudents.Where(s => s.origin == 1).Count();
             //מאמריקה
-            int origin2 = listOfStudents.Where(s => s.originCode == 2).Count();
+            int origin2 = listOfStudents.Where(s => s.origin == 2).Count();
             //מארופה
-            int origin3 = listOfStudents.Where(s => s.originCode == 3).Count();
+            int origin3 = listOfStudents.Where(s => s.origin == 3).Count();
 
             //כמות הבנות הממוצעת מישראל שצריכה להיות בכל חדר
             int origin1InRoom = origin1 / numOfRooms;

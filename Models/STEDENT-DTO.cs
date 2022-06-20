@@ -7,16 +7,29 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-      public  class STEDENT_DTO
+    public class STEDENT_DTO
     {
+        //קוד תלמידה (מיספור אוטומטי ),כ
         public int st_code { get; set; }
+        //תעודת זהות 
         public string id { get; set; }
+        //שם פרטי
         public string firstName { get; set; }
+        //שם מישפחה
         public string lastName { get; set; }
+        //מיקצוע:
+        // מכיל קוד מיקצוע:1= מגמת הנדסת תוכנה,2= מגמת חשבונאות, 3=מגמת משאבי אנוש
         public int profession { get; set; }
+        //מוצא:
+        //מכיל קוד מוצא:1=ישראל, 2=אמריקה, 3=אירופה
         public int origin { get; set; }
+        //מנטליות:
+        //מכיל קוד מנטליות:1=חוזרות בתשובה, 2=מתחזקות,3=חרדיות מבית
         public int mentally { get; set; }
+        //לא להתייחס למשתנה זה!
         public int PersonalFilecCode { get; set; }
+        //שכבת גיל:
+        //מכיל קוד כיתה:1=ט, 2=י, 3=יא, 4=יב
         public int classCode { get; set; }
         public static STEDENT_DTO CONVERTtOdto(STEDENT S)
         {

@@ -9,10 +9,10 @@ namespace Models
 {
     public class ROOM_DTO
     {
-        
+        //קוד חדר
         public int r_code { get; set; }
         public Nullable<int> number_of_beds { get; set; }
-        public Nullable<int> floor_code { get; set; }
+        
 
         public static  ROOM_DTO CONVERTtODTO(ROOM R)
         {
