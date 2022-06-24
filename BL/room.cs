@@ -11,13 +11,13 @@ namespace BL
     public class room
     {
         DBConection dBCon;
-        List<Models.ROOM> listroom;
+        List<Models.ROOMS> listroom;
         List<Models.ROOM_DTO> listroomDTO;
 
         public room()
         {
             dBCon = new DBConection();
-            listroom = dBCon.GetDbSet<ROOM>();
+            listroom = dBCon.GetDbSet<ROOMS>();
             ConvertToDTO();
         }
 
@@ -27,8 +27,8 @@ namespace BL
             {
                 if (listroomDTO.Find(a => a.r_code == R.r_code) == null)
                 {
-                    dBCon.Execute<ROOM>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Insert);
-                    listroom = dBCon.GetDbSet<ROOM>();
+                    dBCon.Execute<ROOMS>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Insert);
+                    listroom = dBCon.GetDbSet<ROOMS>();
                     ConvertToDTO();
                     return listroom.Max(a => a.r_code);
                 }
@@ -46,8 +46,8 @@ namespace BL
             {
                 if (listroomDTO.Find(a => a.r_code == R.r_code) != null)
                 {
-                    dBCon.Execute<ROOM>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Update);
-                    listroom = dBCon.GetDbSet<ROOM>();
+                    dBCon.Execute<ROOMS>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Update);
+                    listroom = dBCon.GetDbSet<ROOMS>();
                     ConvertToDTO();
                     return 1;
                 }
@@ -65,8 +65,8 @@ namespace BL
             {
                 if (listroomDTO.Find(a => a.r_code == R.r_code) != null)
                 {
-                    dBCon.Execute<ROOM>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Delete);
-                    listroom = dBCon.GetDbSet<ROOM>();
+                    dBCon.Execute<ROOMS>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Delete);
+                    listroom = dBCon.GetDbSet<ROOMS>();
                     ConvertToDTO();
                     return 1;
                 }

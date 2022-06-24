@@ -10,7 +10,6 @@ namespace BL
 {
    public class FirstAlgorithm
     {
-        //כמה פעמים האלגוריתם מכמה כיוונים
         //שלא תהיה סתירה בין האילוצים
         public class Room
         {
@@ -58,7 +57,7 @@ namespace BL
             Bl1 bl = new Bl1();
             List<STEDENT_DTO> listOfStudents = bl.GetDbSet<STEDENT_DTO>();
             int numOfStudents = listOfStudents.Count;
-            //מס החדרים, לפי מס הבנות לחלק למס המיטות המקסימלי בכל חדר, ואם יש שארית, יתווספ עוד חדר שאפשר לשבץ בו
+            //מס החדרים, לפי מס הבנות לחלק למס המיטות המקסימלי בכל חדר, ואם יש שארית, יתווסף עוד חדר שאפשר לשבץ בו
             int numOfRooms = (numOfStudents % maxNumOfBedsInRoom == 0) ? numOfStudents / maxNumOfBedsInRoom : numOfStudents / maxNumOfBedsInRoom + 1;
             //מערך של החדרים לשיבוץ בגודל של מס' החדרים שבהם נשבץ  
             Room[] rooms = new Room[numOfRooms];

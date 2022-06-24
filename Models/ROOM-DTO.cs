@@ -14,7 +14,7 @@ namespace Models
         public Nullable<int> number_of_beds { get; set; }
         
 
-        public static  ROOM_DTO CONVERTtODTO(ROOM R)
+        public static  ROOM_DTO CONVERTtODTO(ROOMS R)
         {
             return new ROOM_DTO()
             {
@@ -24,12 +24,12 @@ namespace Models
             };
         }
 
-        public ROOM CONVERTFROMDTO()
+        public ROOMS CONVERTFROMDTO()
         {
-            return new ROOM()
+            return new ROOMS()
             {
                 r_code = this.r_code,
-                number_of_beds = this.number_of_beds,
+                number_of_beds = (int)this.number_of_beds,
                
             };
         }

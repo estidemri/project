@@ -27,11 +27,11 @@ namespace Models
         //מכיל קוד מנטליות:1=חוזרות בתשובה, 2=מתחזקות,3=חרדיות מבית
         public int mentally { get; set; }
         //לא להתייחס למשתנה זה!
-        public int PersonalFilecCode { get; set; }
+        public Nullable<int> PersonalFilecCode { get; set; }
         //שכבת גיל:
         //מכיל קוד כיתה:1=ט, 2=י, 3=יא, 4=יב
         public int classCode { get; set; }
-        public static STEDENT_DTO CONVERTtOdto(STEDENT S)
+        public static STEDENT_DTO CONVERTtOdto(STEDENTS S)
         {
             return new STEDENT_DTO()
             {
@@ -46,9 +46,9 @@ namespace Models
                 classCode = S.classCode,
             };
         }
-        public STEDENT CONVERTFROMDTO()
+        public STEDENTS CONVERTFROMDTO()
         {
-            return new STEDENT()
+            return new STEDENTS()
             {
                 st_code = this.st_code,
                 id = this.id,

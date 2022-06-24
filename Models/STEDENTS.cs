@@ -12,19 +12,19 @@ namespace Models
     using System;
     using System.Collections.Generic;
     
-    public partial class STEDENT
+    public partial class STEDENTS
     {
         public int st_code { get; set; }
         public string id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public int PersonalFilecCode { get; set; }
+        public Nullable<int> PersonalFilecCode { get; set; }
         public int profession { get; set; }
         public int origin { get; set; }
         public int mentally { get; set; }
         public int classCode { get; set; }
-        public int codRoom { get; set; }
+        public Nullable<int> codRoom { get; set; }
     
-        public virtual ROOM ROOM { get; set; }
+        public virtual ROOMS ROOMS { get; set; }
     }
 }

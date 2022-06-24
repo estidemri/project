@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4d19e29a589a4533b40819be02d40680" Name="Diagram1">
-        <EntityTypeShape EntityType="estiModel.ROOM" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="estiModel.STEDENT" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="estiModel.FK__STEDENTS__codRoo__282DF8C2" ManuallyRouted="false" />
+      <Diagram DiagramId="26c299289724449b9ccdc7dc3c5d2a23" Name="Diagram1">
+        <EntityTypeShape EntityType="estiModel.ROOMS" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="estiModel.STEDENTS" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="estiModel.FK__STEDENTS__codRoo__4D5F7D71" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

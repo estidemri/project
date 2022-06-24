@@ -11,13 +11,13 @@ namespace BL
     public class student
     {
             DBConection dBCon;
-            List<Models.STEDENT> liststudent;
+            List<Models.STEDENTS> liststudent;
             List<Models.STEDENT_DTO> liststudentDTO;
 
             public student()
             {
                 dBCon = new DBConection();
-                liststudent = dBCon.GetDbSet<STEDENT>();
+                liststudent = dBCon.GetDbSet<STEDENTS>();
                 ConvertToDTO();
             }
 
@@ -27,8 +27,8 @@ namespace BL
                 {
                     if (liststudentDTO.Find(a => a.id == S.id) == null)
                     {
-                        dBCon.Execute<STEDENT>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Insert);
-                        liststudent = dBCon.GetDbSet<STEDENT>();
+                        dBCon.Execute<STEDENTS>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Insert);
+                        liststudent = dBCon.GetDbSet<STEDENTS>();
                         ConvertToDTO();
                         return liststudent.Max(a => a.classCode  );
                     }
@@ -46,14 +46,14 @@ namespace BL
                 {
                 if (liststudentDTO.Find(a => a.id == S.id) != null)
                     {
-                        dBCon.Execute<STEDENT>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Update);
-                        liststudent = dBCon.GetDbSet<STEDENT>();
+                        dBCon.Execute<STEDENTS>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Update);
+                        liststudent = dBCon.GetDbSet<STEDENTS>();
                         ConvertToDTO();
                         return 1;
                     }
                     return -1;
                 }
-                catch
+                catch(Exception e)
                 {
                     return 0;
                 }
@@ -65,8 +65,8 @@ namespace BL
                 {
                 if (liststudentDTO.Find(a => a.id == S.id) != null)
                     {
-                        dBCon.Execute<STEDENT>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Delete);
-                        liststudent = dBCon.GetDbSet<STEDENT>();
+                        dBCon.Execute<STEDENTS>(S.CONVERTFROMDTO(), DBConection.ExecuteActions.Delete);
+                        liststudent = dBCon.GetDbSet<STEDENTS>();
                         ConvertToDTO();
                         return 1;
                     }

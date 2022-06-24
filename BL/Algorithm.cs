@@ -45,7 +45,9 @@ namespace BL
                      ilutzimMat[i,j] = rooms[i].Arr[3].L[2];
                 }
             }
-            int[,] mat1 = new int[students.Count, rooms.Length ];
+            //int[,] mat1 = new int[students.Count, rooms.Length ];
+            int[,] mat1 = new int[students.Count, students.Count];
+
 
             //for (int i = 0; i < mat1.GetLength(0); i++)
             //{
@@ -55,7 +57,7 @@ namespace BL
             for (int i = 0; i < mat1.GetLength(0); i++)
             {
                 tziun = 0;
-                for (int j = 0; j < mat1.GetLength(1); j++)
+                for (int j = 0; j < rooms.Length; j++)
                 {
                     s = students[i];
                     if (s.classCode == 1 && ilutzimMat[j,0] > 0)
@@ -148,21 +150,34 @@ namespace BL
                     mat1[i, j] = tziun;
                 }
             }
+            
+            for (int i =0; i < mat1.GetLength(0); i++)
+            {
+                for (int j = rooms.Length; j < mat1.GetLength(1); j++)
+                {
+                    mat1[i, j] = mat1[i, j - rooms.Length];
+                }
+            }
             return mat1;
         }
         // פונקציה היוצרת 4 סוגי שיבוצים רנדומליים, בכל פעם לפי סדר שונה, ואת המטריצות שנוצרות שולחת לאלגוריתם ההונגרי
 
-        public void SendToHungarianAlgorithm(int maxBedsInRoom)
+        public Dictionary<int,int> SendToHungarianAlgorithm(int maxBedsInRoom,int numOfRooms)
         {
             Bl1 bl = new Bl1();
-            //אפשר לקצר את הבאת התלמידים ע"י שווה לרשימה
             //יצירת 4 רשימות שבכל אחת ייכנסו התלמידות לפי הסדר שמופיעות במטריצה של כל אחד מהשיבוצים
             List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
-            List<STEDENT_DTO> students1 = bl.GetDbSet<STEDENT_DTO>();
-            List<STEDENT_DTO> students2 = bl.GetDbSet<STEDENT_DTO>();
-            List<STEDENT_DTO> students3 = bl.GetDbSet<STEDENT_DTO>();
+            List<STEDENT_DTO> students1 = new List<STEDENT_DTO>();
+            List<STEDENT_DTO> students2 = new List<STEDENT_DTO>();
+            List<STEDENT_DTO> students3 = new List<STEDENT_DTO>();
             List<STEDENT_DTO> students4 = new List<STEDENT_DTO>();
-            List<STEDENT_DTO> students5 = bl.GetDbSet<STEDENT_DTO>();
+            List<STEDENT_DTO> students5 = new List<STEDENT_DTO>();
+            students.ForEach(s => students1.Add(s));
+            students.ForEach(s => students2.Add(s));
+            students.ForEach(s => students3.Add(s));
+            students.ForEach(s => students5.Add(s));
+
+            int[,] helpMat = new int[students.Count,students.Count];
             int[,] mat1 =MakeMat(maxBedsInRoom,students);
             students1.Reverse();
             int[,] mat2 = MakeMat(maxBedsInRoom, students1);
@@ -175,12 +190,105 @@ namespace BL
             students4.Reverse();
             int[,] mat4 = MakeMat(maxBedsInRoom,students4);
 
+            Dictionary<int, int> minDict = new Dictionary<int, int>();
+            int minMark = 0,mark=0;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
 
-            //איך בודקים מהו השיבוץ הטוב ביותר מבין השיבוצים ???????
+            for (int i = 0; i < mat1.GetLength(0); i++)
+            {
+                for (int j = 0; j < mat1.GetLength(1); j++)
+                {
+                    helpMat[i, j] = mat1[i, j];
+                }
+            }
             int[] arr1 = HungarianAlgorithm.FindAssignments(mat1);
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                dict.Add(students[i].st_code,arr1[i]-((arr1[i]/numOfRooms)*numOfRooms));
+                mark += helpMat[i, dict[students[i].st_code]];
+            }
+            if (mark<minMark)
+            {
+                minMark = mark;
+                minDict.Clear();
+                foreach (var item in dict)
+                {
+                    minDict.Add(item.Key,item.Value);
+                }                                 
+            }
+            dict.Clear();
+
+            for (int i = 0; i < mat2.GetLength(0); i++)
+            {
+                for (int j = 0; j < mat2.GetLength(1); j++)
+                {
+                    helpMat[i, j] = mat2[i, j];
+                }
+            }
             int[] arr2 = HungarianAlgorithm.FindAssignments(mat2);
+            for (int i = 0; i < arr2.Length; i++)
+            {
+                dict.Add(students1[i].st_code, arr2[i] - ((arr2[i] / numOfRooms) * numOfRooms));
+                mark += helpMat[i, dict[students1[i].st_code]];
+            }
+            if (mark < minMark)
+            {
+                minMark = mark;
+                minDict.Clear();
+                foreach (var item in dict)
+                {
+                    minDict.Add(item.Key, item.Value);
+                }
+            }
+            dict.Clear();
+
+            for (int i = 0; i < mat3.GetLength(0); i++)
+            {
+                for (int j = 0; j < mat3.GetLength(1); j++)
+                {
+                    helpMat[i, j] = mat3[i, j];
+                }
+            }
             int[] arr3 = HungarianAlgorithm.FindAssignments(mat3);
+            for (int i = 0; i < arr3.Length; i++)
+            {
+                dict.Add(students3[i].st_code, arr3[i] - ((arr3[i] / numOfRooms) * numOfRooms));
+                mark += helpMat[i, dict[students3[i].st_code]];
+            }
+            if (mark < minMark)
+            {
+                minMark = mark;
+                minDict.Clear();
+                foreach (var item in dict)
+                {
+                    minDict.Add(item.Key, item.Value);
+                }
+            }
+            dict.Clear();
+
+            for (int i = 0; i < mat4.GetLength(0); i++)
+            {
+                for (int j = 0; j < mat4.GetLength(1); j++)
+                {
+                    helpMat[i, j] = mat4[i, j];
+                }
+            }
             int[] arr4 = HungarianAlgorithm.FindAssignments(mat4);
+            for (int i = 0; i < arr4.Length; i++)
+            {
+                dict.Add(students4[i].st_code, arr4[i] - ((arr4[i] / numOfRooms) * numOfRooms));
+                mark += helpMat[i, dict[students4[i].st_code]];
+            }
+            if (mark < minMark)
+            {
+                minMark = mark;
+                minDict.Clear();
+                foreach (var item in dict)
+                {
+                    minDict.Add(item.Key, item.Value);
+                }
+            }
+            return minDict;
         }
     }
 }

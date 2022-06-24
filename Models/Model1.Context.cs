@@ -19,17 +19,13 @@ namespace Models
             : base("name=estiEntities")
         {
         }
-        public DbSet<T> GetDbSet<T>() where T : class
-        {
-            return this.Set<T>();
-        }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ROOM> ROOMS { get; set; }
-        public virtual DbSet<STEDENT> STEDENTS { get; set; }
+        public virtual DbSet<ROOMS> ROOMS { get; set; }
+        public virtual DbSet<STEDENTS> STEDENTS { get; set; }
     }
 }

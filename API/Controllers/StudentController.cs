@@ -14,8 +14,7 @@ namespace API.Controllers
     public class StudentController : ApiController
     {
         BL.student st = new student();
-        [AcceptVerbs("GET", "POST")]
-        [Route("addstudent")]
+        [Route("addStudent")]
         [HttpPost]
         public int addstudent(STEDENT_DTO s)
         {
@@ -29,7 +28,7 @@ namespace API.Controllers
                 return 0;
             }
         }
-        [Route("updatestudent")]
+        [Route("updateStudent")]
         [HttpPost]
         public int updatestudent(STEDENT_DTO s)
         {
@@ -61,7 +60,7 @@ namespace API.Controllers
     // GET: api/Student
     public IEnumerable<STEDENT_DTO> Get()
     {
-        return new List<STEDENT_DTO>();
+        return st.DisplayAllStudent();
     }
     // add swagger
 

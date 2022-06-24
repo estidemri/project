@@ -14,9 +14,9 @@ namespace DAL
         public DBConection() { }
         public List<T> GetDbSet<T>() where T : class
         {
-            using (estiEntities estyEntity = new estiEntities())
+            using ( var estiEntities = new estiEntities())
             {
-                return estyEntity.GetDbSet<T>().ToList();
+                return estiEntities.Set<T>().ToList();
             }
         }
 

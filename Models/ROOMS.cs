@@ -12,18 +12,18 @@ namespace Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ROOM
+    public partial class ROOMS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ROOM()
+        public ROOMS()
         {
-            this.STEDENTS = new HashSet<STEDENT>();
+            this.STEDENTS = new HashSet<STEDENTS>();
         }
     
         public int r_code { get; set; }
-        public Nullable<int> number_of_beds { get; set; }
+        public int number_of_beds { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<STEDENT> STEDENTS { get; set; }
+        public virtual ICollection<STEDENTS> STEDENTS { get; set; }
     }
 }
