@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="r_code" />
           </Key>
-          <Property Name="r_code" Type="int" Nullable="false" />
+          <Property Name="r_code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="number_of_beds" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="STEDENTS">
@@ -27,7 +27,7 @@
           <Property Name="classCode" Type="int" Nullable="false" />
           <Property Name="codRoom" Type="int" />
         </EntityType>
-        <Association Name="FK__STEDENTS__codRoo__6166761E">
+        <Association Name="FK__STEDENTS__codRoo__0880433F">
           <End Role="ROOMS" Type="Self.ROOMS" Multiplicity="0..1" />
           <End Role="STEDENTS" Type="Self.STEDENTS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -42,7 +42,7 @@
         <EntityContainer Name="estiModelStoreContainer">
           <EntitySet Name="ROOMS" EntityType="Self.ROOMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="STEDENTS" EntityType="Self.STEDENTS" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__STEDENTS__codRoo__6166761E" Association="Self.FK__STEDENTS__codRoo__6166761E">
+          <AssociationSet Name="FK__STEDENTS__codRoo__0880433F" Association="Self.FK__STEDENTS__codRoo__0880433F">
             <End Role="ROOMS" EntitySet="ROOMS" />
             <End Role="STEDENTS" EntitySet="STEDENTS" />
           </AssociationSet>

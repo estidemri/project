@@ -57,27 +57,27 @@ namespace API.Controllers
             }
         }
 
-    // GET: api/Student
-    public IEnumerable<STEDENT_DTO> Get()
+        [Route("doAlgorithm")]
+        [HttpGet]
+        public  IEnumerable<STEDENT_DTO> doAlgorithm(int maxNumOfBeds)
+        {
+            try
+            {
+             var alg = new Algorithm   
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        // GET: api/Student
+        public IEnumerable<STEDENT_DTO> Get()
     {
         return st.DisplayAllStudent();
     }
-    // add swagger
 
-
-    // POST: api/Student
-    public void Post([FromBody]STEDENT_DTO value)
-    {
-    }
-
-    // PUT: api/Student/5
-    public void Put(int id, [FromBody]STEDENT_DTO value)
-    {
-    }
-
-    // DELETE: api/Student/5
-    public void Delete(int id)
-    {
-    }
+  
     }
 }

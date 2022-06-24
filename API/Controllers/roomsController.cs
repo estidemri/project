@@ -8,57 +8,52 @@ using Models;
 
 namespace API.Controllers
 {
-    public class roomsController : ApiController
-    {
+    [RoutePrefix("api/room")]
+    public class roomController : ApiController { 
 
-        [RoutePrefix("api/room")]
-        public class CompanyController : ApiController
+        BL.room ro = new BL.room();
+        [Route("addroom")]
+        [HttpPost]
+        public int addroom(ROOM_DTO r)
         {
-            BL.room ro = new BL.room();
-            [AcceptVerbs("GET", "POST")]
-            [Route("addroom")]
-            [HttpPost]
-            public int addroom(ROOM_DTO r)
-            {
-                try
-                {
-                    ro.Insert(r);
-                    return 1;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-            [Route("updateroom")]
-            [HttpPost]
-            public int updateroom(ROOM_DTO r)
-            {
-                try
-                {
-                    ro.Update(r);
-                    return 1;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-            [Route("deleateroom")]
-            [HttpPost]
-            public int deleateroom(ROOM_DTO r)
-            {
-                try
-                {
-                    ro.Delete(r);
-                    return 1;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-
+              return  ro.Insert(r);
+              
+            
         }
+        [Route("updateroom")]
+        [HttpPost]
+        public int updateroom(ROOM_DTO r)
+        {
+            try
+            {
+                ro.Update(r);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        [Route("deleateroom")]
+        [HttpPost]
+        public int deleateroom(ROOM_DTO r)
+        {
+            try
+            {
+                ro.Delete(r);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        [HttpGet]
+        public IEnumerable<ROOM_DTO> Get()
+        {
+            return ro.DisplayAllROOMS();
+        }
+
     }
 }
+

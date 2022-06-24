@@ -23,21 +23,13 @@ namespace BL
 
         public int Insert(ROOM_DTO R)
         {
-            try
-            {
-                if (listroomDTO.Find(a => a.r_code == R.r_code) == null)
-                {
-                    dBCon.Execute<ROOMS>(R.CONVERTFROMDTO(), DBConection.ExecuteActions.Insert);
-                    listroom = dBCon.GetDbSet<ROOMS>();
-                    ConvertToDTO();
-                    return listroom.Max(a => a.r_code);
-                }
-                return -1;
-            }
-            catch
-            {
-                return 0;
-            }
+
+            dBCon.Execute<ROOMS>(R.CONVERTFROMDTO(),
+                DBConection.ExecuteActions.Insert);
+            listroom = dBCon.GetDbSet<ROOMS>();
+            ConvertToDTO();
+            return listroom.Max(a => a.r_code);
+
         }
 
         public int Update(ROOM_DTO R)

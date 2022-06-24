@@ -11,6 +11,14 @@ namespace BL
 {
     public class Algorithm
     {
+        public void DoAlgorithem(int maxNumOfBedsInRoom)
+        {
+            //do the algorithem and save in the DB!!!!
+
+
+    
+
+        }
         public int[,] MakeMat(int maxNumOfBedsInRoom, List<STEDENT_DTO> students)
         {
 
@@ -167,15 +175,12 @@ namespace BL
             Bl1 bl = new Bl1();
             //יצירת 4 רשימות שבכל אחת ייכנסו התלמידות לפי הסדר שמופיעות במטריצה של כל אחד מהשיבוצים
             List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
-            List<STEDENT_DTO> students1 = new List<STEDENT_DTO>();
-            List<STEDENT_DTO> students2 = new List<STEDENT_DTO>();
-            List<STEDENT_DTO> students3 = new List<STEDENT_DTO>();
-            List<STEDENT_DTO> students4 = new List<STEDENT_DTO>();
-            List<STEDENT_DTO> students5 = new List<STEDENT_DTO>();
-            students.ForEach(s => students1.Add(s));
-            students.ForEach(s => students2.Add(s));
-            students.ForEach(s => students3.Add(s));
-            students.ForEach(s => students5.Add(s));
+            List<STEDENT_DTO> students1 = new List<STEDENT_DTO>(students);
+            List<STEDENT_DTO> students2 = new List<STEDENT_DTO>(students);
+            List<STEDENT_DTO> students3 = new List<STEDENT_DTO>(students);
+            List<STEDENT_DTO> students4 = new List<STEDENT_DTO>(students);
+            List<STEDENT_DTO> students5 = new List<STEDENT_DTO>(students);
+       
 
             int[,] helpMat = new int[students.Count,students.Count];
             int[,] mat1 =MakeMat(maxBedsInRoom,students);
