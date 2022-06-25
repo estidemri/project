@@ -11,20 +11,32 @@ namespace BL
 {
     public class Algorithm
     {
-        public void DoAlgorithem(int maxNumOfBedsInRoom)
+        public Dictionary<int, List<string>> DoAlgorithem(int maxNumOfBedsInRoom)
         {
             //do the algorithem and save in the DB!!!!
+            var studentsDic = SendToHungarianAlgorithm(maxNumOfBedsInRoom);
 
+            var finalDic = new Dictionary<int, List<string>>();
+            foreach (var s in studentsDic)
+            {
 
-    
+                var student = students.Find(ss => ss.st_code == s.Key);
+                if (!finalDic.ContainsKey(s.Value))
+                {
+                    finalDic.Add(s.Value, new List<string>());
+                }
+                finalDic[s.Value].Add(student.firstName + " " + student.lastName);
+
+            }
+            return finalDic;
 
         }
-        public int[,] MakeMat(int maxNumOfBedsInRoom, List<STEDENT_DTO> students)
+        public int[,] MakeMat(int maxNumOfBedsInRoom, List<STEDENTS> students)
         {
 
             Bl1 bl = new Bl1();
-            //List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
-            STEDENT_DTO s = new STEDENT_DTO();
+            //List<STEDENTS> students = bl.GetDbSet<STEDENTS>();
+            STEDENTS s = new STEDENTS();
             int tziun = 0;
             FirstAlgorithm f = new FirstAlgorithm();
             Room[] rooms = f.RoomsAlgorithm(maxNumOfBedsInRoom);
@@ -35,22 +47,22 @@ namespace BL
             {
                 for (int j = 0; j < ilutzimMat.GetLength(1); j++)
                 {
-                     ilutzimMat[i,j] = rooms[i].Arr[0].L[0];
-                     ilutzimMat[i,j] = rooms[i].Arr[0].L[1];
-                     ilutzimMat[i,j] = rooms[i].Arr[0].L[2];
-                     ilutzimMat[i,j] = rooms[i].Arr[0].L[3];
-                    
-                     ilutzimMat[i,j] = rooms[i].Arr[1].L[0];
-                     ilutzimMat[i,j] = rooms[i].Arr[1].L[1];
-                     ilutzimMat[i,j] = rooms[i].Arr[1].L[2];
+                    ilutzimMat[i, j] = rooms[i].Arr[0].L[0];
+                    ilutzimMat[i, j] = rooms[i].Arr[0].L[1];
+                    ilutzimMat[i, j] = rooms[i].Arr[0].L[2];
+                    ilutzimMat[i, j] = rooms[i].Arr[0].L[3];
 
-                     ilutzimMat[i,j] = rooms[i].Arr[2].L[0];
-                     ilutzimMat[i,j] = rooms[i].Arr[2].L[1];
-                     ilutzimMat[i,j] = rooms[i].Arr[2].L[2];
-             
-                     ilutzimMat[i,j] = rooms[i].Arr[3].L[0];
-                     ilutzimMat[i,j] = rooms[i].Arr[3].L[1];
-                     ilutzimMat[i,j] = rooms[i].Arr[3].L[2];
+                    ilutzimMat[i, j] = rooms[i].Arr[1].L[0];
+                    ilutzimMat[i, j] = rooms[i].Arr[1].L[1];
+                    ilutzimMat[i, j] = rooms[i].Arr[1].L[2];
+
+                    ilutzimMat[i, j] = rooms[i].Arr[2].L[0];
+                    ilutzimMat[i, j] = rooms[i].Arr[2].L[1];
+                    ilutzimMat[i, j] = rooms[i].Arr[2].L[2];
+
+                    ilutzimMat[i, j] = rooms[i].Arr[3].L[0];
+                    ilutzimMat[i, j] = rooms[i].Arr[3].L[1];
+                    ilutzimMat[i, j] = rooms[i].Arr[3].L[2];
                 }
             }
             //int[,] mat1 = new int[students.Count, rooms.Length ];
@@ -68,7 +80,7 @@ namespace BL
                 for (int j = 0; j < rooms.Length; j++)
                 {
                     s = students[i];
-                    if (s.classCode == 1 && ilutzimMat[j,0] > 0)
+                    if (s.classCode == 1 && ilutzimMat[j, 0] > 0)
                     {
                         ilutzimMat[j, 0]--;
                     }
@@ -94,7 +106,7 @@ namespace BL
                     }
 
 
- 
+
                     if (s.profession == 1 && ilutzimMat[j, 4] > 0)
                     {
                         ilutzimMat[j, 4]--;
@@ -158,8 +170,8 @@ namespace BL
                     mat1[i, j] = tziun;
                 }
             }
-            
-            for (int i =0; i < mat1.GetLength(0); i++)
+
+            for (int i = 0; i < mat1.GetLength(0); i++)
             {
                 for (int j = rooms.Length; j < mat1.GetLength(1); j++)
                 {
@@ -170,33 +182,36 @@ namespace BL
         }
         // פונקציה היוצרת 4 סוגי שיבוצים רנדומליים, בכל פעם לפי סדר שונה, ואת המטריצות שנוצרות שולחת לאלגוריתם ההונגרי
 
-        public Dictionary<int,int> SendToHungarianAlgorithm(int maxBedsInRoom,int numOfRooms)
+        private List<STEDENTS> students;
+
+        public Dictionary<int, int> SendToHungarianAlgorithm(int maxBedsInRoom)
         {
             Bl1 bl = new Bl1();
             //יצירת 4 רשימות שבכל אחת ייכנסו התלמידות לפי הסדר שמופיעות במטריצה של כל אחד מהשיבוצים
-            List<STEDENT_DTO> students = bl.GetDbSet<STEDENT_DTO>();
-            List<STEDENT_DTO> students1 = new List<STEDENT_DTO>(students);
-            List<STEDENT_DTO> students2 = new List<STEDENT_DTO>(students);
-            List<STEDENT_DTO> students3 = new List<STEDENT_DTO>(students);
-            List<STEDENT_DTO> students4 = new List<STEDENT_DTO>(students);
-            List<STEDENT_DTO> students5 = new List<STEDENT_DTO>(students);
-       
+            students = bl.GetDbSet<STEDENTS>();
+            List<STEDENTS> students1 = new List<STEDENTS>(students);
+            List<STEDENTS> students2 = new List<STEDENTS>(students);
+            List<STEDENTS> students3 = new List<STEDENTS>(students);
+            List<STEDENTS> students4 = new List<STEDENTS>(students);
+            List<STEDENTS> students5 = new List<STEDENTS>(students);
+            int numOfRooms = bl.GetDbSet<ROOMS>().Count;
 
-            int[,] helpMat = new int[students.Count,students.Count];
-            int[,] mat1 =MakeMat(maxBedsInRoom,students);
+            int[,] helpMat = new int[students.Count, students.Count];
+            int[,] mat1 = MakeMat(maxBedsInRoom, students);
             students1.Reverse();
             int[,] mat2 = MakeMat(maxBedsInRoom, students1);
             int stdCount = students1.Count;
             students5.RemoveRange(0, stdCount / 2);
             students3.RemoveRange(stdCount / 2, stdCount - stdCount / 2);
             students3.InsertRange(0, students5);
-            int[,] mat3 = MakeMat(maxBedsInRoom,students3);
+            int[,] mat3 = MakeMat(maxBedsInRoom, students3);
+            students4.Clear();
             students3.ForEach(s => students4.Add(s));
             students4.Reverse();
-            int[,] mat4 = MakeMat(maxBedsInRoom,students4);
+            int[,] mat4 = MakeMat(maxBedsInRoom, students4);
 
             Dictionary<int, int> minDict = new Dictionary<int, int>();
-            int minMark = 0,mark=0;
+            int minMark = 0, mark = 0;
             Dictionary<int, int> dict = new Dictionary<int, int>();
 
             for (int i = 0; i < mat1.GetLength(0); i++)
@@ -209,20 +224,20 @@ namespace BL
             int[] arr1 = HungarianAlgorithm.FindAssignments(mat1);
             for (int i = 0; i < arr1.Length; i++)
             {
-                dict.Add(students[i].st_code,arr1[i]-((arr1[i]/numOfRooms)*numOfRooms));
+                dict.Add(students[i].st_code, arr1[i] - ((arr1[i] / numOfRooms) * numOfRooms));
                 mark += helpMat[i, dict[students[i].st_code]];
             }
-            if (mark<minMark)
-            {
-                minMark = mark;
-                minDict.Clear();
-                foreach (var item in dict)
-                {
-                    minDict.Add(item.Key,item.Value);
-                }                                 
-            }
-            dict.Clear();
 
+
+            minMark = mark;
+            minDict.Clear();
+            foreach (var item in dict)
+            {
+                minDict.Add(item.Key, item.Value);
+            }
+
+            dict.Clear();
+            mark = 0;
             for (int i = 0; i < mat2.GetLength(0); i++)
             {
                 for (int j = 0; j < mat2.GetLength(1); j++)
@@ -246,6 +261,7 @@ namespace BL
                 }
             }
             dict.Clear();
+            mark = 0;
 
             for (int i = 0; i < mat3.GetLength(0); i++)
             {
@@ -270,10 +286,11 @@ namespace BL
                 }
             }
             dict.Clear();
+            mark = 0;
 
-            for (int i = 0; i < mat4.GetLength(0); i++)
+            for (int i = 0; i < helpMat.GetLength(0); i++)
             {
-                for (int j = 0; j < mat4.GetLength(1); j++)
+                for (int j = 0; j < helpMat.GetLength(1); j++)
                 {
                     helpMat[i, j] = mat4[i, j];
                 }

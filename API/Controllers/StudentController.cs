@@ -59,14 +59,15 @@ namespace API.Controllers
 
         [Route("doAlgorithm")]
         [HttpGet]
-        public  IEnumerable<STEDENT_DTO> doAlgorithm(int maxNumOfBeds)
+        public Dictionary<int, List<string>> doAlgorithm(int maxNumOfBeds)
         {
             try
             {
-             var alg = new Algorithm   
-                return null;
+               var alg = new Algorithm();
+                var res = alg.DoAlgorithem(maxNumOfBeds);
+                return res;
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }

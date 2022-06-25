@@ -30,16 +30,14 @@ namespace BL
             //איפוס מערך האילוצים של חדר
             public void RestartArrIlutzim()
             {
+                for (int i = 1; i < 5; i++)
+                {
+                    arr[i] = new ArrIlutzim();
+                    arr[i].L = new int[3] { 0, 0, 0 };
+                }
+                arr[0] = new ArrIlutzim();
                 //כיתה
                 arr[0].L = new int[4] { 0, 0, 0, 0 };
-                //מגמה
-                arr[1].L = new int[3] { 0, 0, 0 };
-                //מנטליות
-                arr[2].L = new int[3] { 0, 0, 0 };
-                //מוצא
-                arr[3].L = new int[3] { 0, 0, 0 };
-                //קוי אופי
-                arr[4].L = new int[4] { 0, 0, 0, 0 };
             }
         }
        public class ArrIlutzim
@@ -50,12 +48,13 @@ namespace BL
                 get { return l; }
                 set { l = value; }
             }
+           
         }
         //האלגריתם לאיפיון החדר 
         public Room[] RoomsAlgorithm(int maxNumOfBedsInRoom)
         {
             Bl1 bl = new Bl1();
-            List<STEDENT_DTO> listOfStudents = bl.GetDbSet<STEDENT_DTO>();
+            List<STEDENTS> listOfStudents = bl.GetDbSet<STEDENTS>();
             int numOfStudents = listOfStudents.Count;
             //מס החדרים, לפי מס הבנות לחלק למס המיטות המקסימלי בכל חדר, ואם יש שארית, יתווסף עוד חדר שאפשר לשבץ בו
             int numOfRooms = (numOfStudents % maxNumOfBedsInRoom == 0) ? numOfStudents / maxNumOfBedsInRoom : numOfStudents / maxNumOfBedsInRoom + 1;
@@ -64,6 +63,7 @@ namespace BL
             //מס' מיטות בכל חדר
             for (int i = 0; i < rooms.Length; i++)
             {
+                rooms[i] = new Room();
                 rooms[i].Beds = maxNumOfBedsInRoom;
                 //זימון פונקציה שמאפסת את מערך האילוצים
                 rooms[i].RestartArrIlutzim();
