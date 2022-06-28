@@ -63,22 +63,31 @@ namespace API.Controllers
         {
             try
             {
-               var alg = new Algorithm();
-                var res = alg.DoAlgorithem(maxNumOfBeds);
+                var alg = new Algorithm();
+                var dic = alg.SendToHungarianAlgorithm(maxNumOfBeds);
+                var res = alg.DoAlgorithem(maxNumOfBeds, dic);
                 return res;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
         }
+        [Route("getPlacements")]
+        [HttpGet]
+        public Dictionary<int, List<string>> GetDic()
+        {
+            return st.DisplayAllStudent().GroupBy(s => s.classCode)
+                .ToDictionary(g => g.Key
+                , g => g.Select(s => s.firstName + " " + s.lastName).ToList());
+        }
 
         // GET: api/Student
         public IEnumerable<STEDENT_DTO> Get()
-    {
-        return st.DisplayAllStudent();
-    }
+        {
+            return st.DisplayAllStudent();
+        }
 
-  
+
     }
 }

@@ -11,13 +11,13 @@ namespace BL
 {
     public class Algorithm
     {
-        public Dictionary<int, List<string>> DoAlgorithem(int maxNumOfBedsInRoom)
+        public Dictionary<int, List<string>> DoAlgorithem(int maxNumOfBedsInRoom,Dictionary<int,int> studentDic)
         {
             //do the algorithem and save in the DB!!!!
-            var studentsDic = SendToHungarianAlgorithm(maxNumOfBedsInRoom);
+           // var studentsDic = studentDic;
 
             var finalDic = new Dictionary<int, List<string>>();
-            foreach (var s in studentsDic)
+            foreach (var s in studentDic)
             {
 
                 var student = students.Find(ss => ss.st_code == s.Key);
@@ -31,16 +31,18 @@ namespace BL
             return finalDic;
 
         }
+        private int NumberOfRooms = 0;
+
+        //בנית מטריצת הציונים
         public int[,] MakeMat(int maxNumOfBedsInRoom, List<STEDENTS> students)
         {
 
             Bl1 bl = new Bl1();
-            //List<STEDENTS> students = bl.GetDbSet<STEDENTS>();
             STEDENTS s = new STEDENTS();
             int tziun = 0;
             FirstAlgorithm f = new FirstAlgorithm();
-            Room[] rooms = f.RoomsAlgorithm(maxNumOfBedsInRoom);
-
+            Room[] rooms = f.RoomsAlgorithm(maxNumOfBedsInRoom, students);
+            NumberOfRooms = rooms.Length;
             //מטריצה שתכיל את כמות הבנות שאמורות להיות בחדר מכל אילוץ
             int[,] ilutzimMat = new int[rooms.Length, 13];
             for (int i = 0; i < ilutzimMat.GetLength(0); i++)
@@ -65,14 +67,8 @@ namespace BL
                     ilutzimMat[i, j] = rooms[i].Arr[3].L[2];
                 }
             }
-            //int[,] mat1 = new int[students.Count, rooms.Length ];
+
             int[,] mat1 = new int[students.Count, students.Count];
-
-
-            //for (int i = 0; i < mat1.GetLength(0); i++)
-            //{
-            //    mat1[i, 0] = students[i].st_code;
-            //}
 
             for (int i = 0; i < mat1.GetLength(0); i++)
             {
@@ -94,8 +90,8 @@ namespace BL
                             {
                                 if (s.classCode == 4 && ilutzimMat[j, 3] > 0) { ilutzimMat[j, 3]--; }
                                 else
-                                {
-                                    tziun += 5;
+                                {//45% 
+                                    tziun += 9;
 
                                 }
 
@@ -119,7 +115,7 @@ namespace BL
                             if (s.profession == 3 && ilutzimMat[j, 6] > 0) { ilutzimMat[j, 6]--; }
                             else
                             {
-
+                                //25%
                                 tziun += 5;
 
                             }
@@ -139,8 +135,8 @@ namespace BL
                             if (s.origin == 3 && ilutzimMat[j, 9] > 0) { ilutzimMat[j, 9]--; }
                             else
                             {
-
-                                tziun += 4;
+                                //15%
+                                tziun += 3;
 
                             }
 
@@ -159,18 +155,18 @@ namespace BL
                             if (s.mentally == 3 && ilutzimMat[j, 12] > 0) { ilutzimMat[j, 12]--; }
                             else
                             {
-
-                                tziun += 4;
+                                //15%
+                                tziun += 3;
                             }
 
                         }
 
                     }
-
+                    // מכניס את הציון לבת שעליה נמצאים
                     mat1[i, j] = tziun;
                 }
             }
-
+            //  מעתיק את  הציונים עבור כול המיטות 
             for (int i = 0; i < mat1.GetLength(0); i++)
             {
                 for (int j = rooms.Length; j < mat1.GetLength(1); j++)
@@ -186,18 +182,34 @@ namespace BL
 
         public Dictionary<int, int> SendToHungarianAlgorithm(int maxBedsInRoom)
         {
+            int randIndex;
+            Random rand = new Random();
             Bl1 bl = new Bl1();
             //יצירת 4 רשימות שבכל אחת ייכנסו התלמידות לפי הסדר שמופיעות במטריצה של כל אחד מהשיבוצים
             students = bl.GetDbSet<STEDENTS>();
-            List<STEDENTS> students1 = new List<STEDENTS>(students);
-            List<STEDENTS> students2 = new List<STEDENTS>(students);
-            List<STEDENTS> students3 = new List<STEDENTS>(students);
-            List<STEDENTS> students4 = new List<STEDENTS>(students);
-            List<STEDENTS> students5 = new List<STEDENTS>(students);
-            int numOfRooms = bl.GetDbSet<ROOMS>().Count;
+            List<STEDENTS> students11 = new List<STEDENTS>();
+
+            randIndex = rand.Next(0, students.Count);
+            students11.Add(students[randIndex]);
+
+            for (int i = 0; i < (students.Count) - 1; i++)
+            {
+                randIndex = rand.Next(0, students.Count-1);
+                while (students11.Find(s => s.st_code == students[randIndex].st_code) != null)
+                {
+                    randIndex = rand.Next(0, students.Count);
+                }
+                students11.Add(students[randIndex]);
+            }
+
+            List<STEDENTS> students1 = new List<STEDENTS>(students11);
+            List<STEDENTS> students2 = new List<STEDENTS>(students11);
+            List<STEDENTS> students3 = new List<STEDENTS>(students11);
+            List<STEDENTS> students4 = new List<STEDENTS>(students11);
+            List<STEDENTS> students5 = new List<STEDENTS>(students11);
 
             int[,] helpMat = new int[students.Count, students.Count];
-            int[,] mat1 = MakeMat(maxBedsInRoom, students);
+            int[,] mat1 = MakeMat(maxBedsInRoom, students11);
             students1.Reverse();
             int[,] mat2 = MakeMat(maxBedsInRoom, students1);
             int stdCount = students1.Count;
@@ -224,7 +236,7 @@ namespace BL
             int[] arr1 = HungarianAlgorithm.FindAssignments(mat1);
             for (int i = 0; i < arr1.Length; i++)
             {
-                dict.Add(students[i].st_code, arr1[i] - ((arr1[i] / numOfRooms) * numOfRooms));
+                dict.Add(students[i].st_code, arr1[i] - ((arr1[i] / NumberOfRooms) * NumberOfRooms));
                 mark += helpMat[i, dict[students[i].st_code]];
             }
 
@@ -248,7 +260,7 @@ namespace BL
             int[] arr2 = HungarianAlgorithm.FindAssignments(mat2);
             for (int i = 0; i < arr2.Length; i++)
             {
-                dict.Add(students1[i].st_code, arr2[i] - ((arr2[i] / numOfRooms) * numOfRooms));
+                dict.Add(students1[i].st_code, arr2[i] - ((arr2[i] / NumberOfRooms) * NumberOfRooms));
                 mark += helpMat[i, dict[students1[i].st_code]];
             }
             if (mark < minMark)
@@ -273,7 +285,7 @@ namespace BL
             int[] arr3 = HungarianAlgorithm.FindAssignments(mat3);
             for (int i = 0; i < arr3.Length; i++)
             {
-                dict.Add(students3[i].st_code, arr3[i] - ((arr3[i] / numOfRooms) * numOfRooms));
+                dict.Add(students3[i].st_code, arr3[i] - ((arr3[i] / NumberOfRooms) * NumberOfRooms));
                 mark += helpMat[i, dict[students3[i].st_code]];
             }
             if (mark < minMark)
@@ -298,7 +310,7 @@ namespace BL
             int[] arr4 = HungarianAlgorithm.FindAssignments(mat4);
             for (int i = 0; i < arr4.Length; i++)
             {
-                dict.Add(students4[i].st_code, arr4[i] - ((arr4[i] / numOfRooms) * numOfRooms));
+                dict.Add(students4[i].st_code, arr4[i] - ((arr4[i] / NumberOfRooms) * NumberOfRooms));
                 mark += helpMat[i, dict[students4[i].st_code]];
             }
             if (mark < minMark)
@@ -309,6 +321,25 @@ namespace BL
                 {
                     minDict.Add(item.Key, item.Value);
                 }
+            }
+            STEDENTS updateS = new STEDENTS();
+
+            foreach (var item in minDict)
+            {
+                updateS = students.Find(s => s.st_code == item.Key);
+                if (updateS != null)
+                {
+                    updateS.codRoom = item.Value;
+                    try
+                    {
+                        bl.UpdateToDB<STEDENTS>(updateS);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+
             }
             return minDict;
         }

@@ -21,7 +21,7 @@ namespace BL
                 set { beds = value; }
             }
 
-            private ArrIlutzim[] arr = new ArrIlutzim[5];
+            private ArrIlutzim[] arr = new ArrIlutzim[4];
             public ArrIlutzim[]Arr
             {
                 get { return arr; }
@@ -30,7 +30,7 @@ namespace BL
             //איפוס מערך האילוצים של חדר
             public void RestartArrIlutzim()
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 1; i < 4; i++)
                 {
                     arr[i] = new ArrIlutzim();
                     arr[i].L = new int[3] { 0, 0, 0 };
@@ -51,10 +51,10 @@ namespace BL
            
         }
         //האלגריתם לאיפיון החדר 
-        public Room[] RoomsAlgorithm(int maxNumOfBedsInRoom)
+        public Room[] RoomsAlgorithm(int maxNumOfBedsInRoom, List<STEDENTS> listOfStudents)
         {
             Bl1 bl = new Bl1();
-            List<STEDENTS> listOfStudents = bl.GetDbSet<STEDENTS>();
+            //List<STEDENTS> listOfStudents = bl.GetDbSet<STEDENTS>();
             int numOfStudents = listOfStudents.Count;
             //מס החדרים, לפי מס הבנות לחלק למס המיטות המקסימלי בכל חדר, ואם יש שארית, יתווסף עוד חדר שאפשר לשבץ בו
             int numOfRooms = (numOfStudents % maxNumOfBedsInRoom == 0) ? numOfStudents / maxNumOfBedsInRoom : numOfStudents / maxNumOfBedsInRoom + 1;
@@ -150,12 +150,12 @@ namespace BL
                 for (int i = 0; i < numOfRooms; i++)
                 {
                     int beds = rooms[i].Beds;
-                    if (num2 > 0 && beds > 0)
+                    if (num4 > 0 && beds > 0)
                     {
                         if (num4 < beds)
                         {
                             rooms[i].Arr[0].L[3] += num4;
-                            num2 = 0;
+                            num4 = 0;
                         }
                         else
                         {
@@ -235,6 +235,7 @@ namespace BL
             int modorigin2 = origin2 % numOfRooms;
             //כמות הבנות שנשארה מארופה לאחר החלוקה הממוצעת
             int modorigin3 = origin3 % numOfRooms;
+
             for (int i = 0; i < numOfRooms; i++)
             {
                 //מגמה
@@ -262,46 +263,46 @@ namespace BL
 
                 //מנטליות
                 if (modmentally1 == 0)
-                    rooms[i].Arr[1].L[0] = mentally1InRoom;
+                    rooms[i].Arr[2].L[0] = mentally1InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[0] = mentally1InRoom + 1;
+                    rooms[i].Arr[2].L[0] = mentally1InRoom + 1;
                     modmentally1--;
                 }
                 if (modmentally2 == 0)
-                    rooms[i].Arr[1].L[1] = mentally2InRoom;
+                    rooms[i].Arr[2].L[1] = mentally2InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[1] = mentally2InRoom + 1;
+                    rooms[i].Arr[2].L[1] = mentally2InRoom + 1;
                     modmentally2--;
                 }
                 if (modmentally3 == 0)
-                    rooms[i].Arr[1].L[2] = mentally3InRoom;
+                    rooms[i].Arr[2].L[2] = mentally3InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[2] = mentally3InRoom + 1;
+                    rooms[i].Arr[2].L[2] = mentally3InRoom + 1;
                     modmentally3--;
                 }
                 //מוצא
                 if (modorigin1 == 0)
-                    rooms[i].Arr[1].L[0] = origin1InRoom;
+                    rooms[i].Arr[3].L[0] = origin1InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[0] = origin1InRoom + 1;
+                    rooms[i].Arr[3].L[0] = origin1InRoom + 1;
                     modorigin1--;
                 }
                 if (modorigin2 == 0)
-                    rooms[i].Arr[1].L[1] = origin2InRoom;
+                    rooms[i].Arr[3].L[1] = origin2InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[1] = origin2InRoom + 1;
+                    rooms[i].Arr[3].L[1] = origin2InRoom + 1;
                     modorigin2--;
                 }
                 if (modorigin3 == 0)
-                    rooms[i].Arr[1].L[2] = origin3InRoom;
+                    rooms[i].Arr[3].L[2] = origin3InRoom;
                 else
                 {
-                    rooms[i].Arr[1].L[2] = origin3InRoom + 1;
+                    rooms[i].Arr[3].L[2] = origin3InRoom + 1;
                     modorigin3--;
                 }
             }
